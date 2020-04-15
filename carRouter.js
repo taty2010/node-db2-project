@@ -48,6 +48,21 @@ router.put('/:id', ( req, res ) => {
   })
 })
 
+router.post('/', ( req, res ) => {
+  const data = req.body;
+  db('cars')
+  .insert(data)
+  .then( data => {
+    if(data){
+      res.status(200).json(data);
+    }else{
+      res.status(400).json({message: 'Could not add new car information'})
+    }
+  }).catch( err => {
+    res.status(500).json({Error: 'Error adding car information', err})
+  })
+})
+
 router.delete('/:id', ( req, res ) => {
   const { id } = req.params;
   db('cars')
